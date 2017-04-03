@@ -22,6 +22,7 @@ import logging
 
 class ActivityInfo(ProcessInterface):
     timestampSubtract = 3600 * 24  # 1 day
+    maxActivityInfoCount = 10
     imgDir = 'activityInfo'
 
     def __init__(self, fontPath):
@@ -73,6 +74,7 @@ class ActivityInfo(ProcessInterface):
         pp.subplot(2, 1, 2)
         pp.pie(list(pieDat2.values()), labels=list(pieDat2.keys()), shadow=True,
                textprops={'fontproperties': self.prop})
+
         pp.savefig(fn)
         return fn
 

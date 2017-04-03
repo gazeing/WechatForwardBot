@@ -16,6 +16,7 @@ import jieba
 
 class GroupTagCloud(ProcessInterface):
     recordMaxNum = 500
+    maxFrequency = 40
     imgDir = 'TagCloud'
 
     def __init__(self, fontPath):
