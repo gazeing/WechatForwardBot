@@ -4,6 +4,7 @@ from ProcessInterface import ProcessInterface
 from utilities import *
 from itchat.content import *
 
+
 class HistoryRecorder(ProcessInterface):
     def __init__(self):
         self.client = MongoClient()
@@ -15,11 +16,17 @@ class HistoryRecorder(ProcessInterface):
     def process(self, msg, type):
         if type != TEXT:
             return
+        if msg['Content'] == '/tagcloud':
+            return
+        if msg['Content'] == '/activity':
+            return
+        if msg['Content'] == '/shenmegui':
+            return
         r = {
             'content': msg['Content'],
             'from': msg['ActualNickName'],
             'fromId': msg['ToUserName'],
             'to': msg['User']['NickName'] if 'User' in msg and 'UserName' in msg['User'] else 'N/A',
             'timestamp': time()
-            }
+        }
         self.coll.insert(r)

@@ -13,6 +13,7 @@ import time
 import logging
 import jieba
 
+
 class GroupTagCloud(ProcessInterface):
     recordMaxNum = 500
     imgDir = 'TagCloud'
@@ -39,11 +40,12 @@ class GroupTagCloud(ProcessInterface):
     def generateTagCloudForGroup(self, groupName, userName=None):
         records = None
         if userName is None:
-            records = self.coll.find({ 'to': groupName }).sort([ ('timestamp', DESCENDING) ]).limit(self.recordMaxNum)
+            records = self.coll.find({'to': groupName}).sort([('timestamp', DESCENDING)]).limit(self.recordMaxNum)
         else:
-            records = self.coll.find({ 'from': userName, 'to': groupName }).sort([ ('timestamp', DESCENDING) ]).limit(self.recordMaxNum)
-        texts = [ r['content'] for r in records ]
-        frequencies = Counter([ w for text in texts for w in jieba.cut(text, cut_all=False) if len(w) > 1 ])
+            records = self.coll.find({'from': userName, 'to': groupName}).sort([('timestamp', DESCENDING)]).limit(
+                self.recordMaxNum)
+        texts = [r['content'] for r in records]
+        frequencies = Counter([w for text in texts for w in jieba.cut(text, cut_all=False) if len(w) > 1])
         img = self.wordCloud.generate_from_frequencies(frequencies).to_image()
         fn = self.generateTmpFileName()
         img.save(fn)
@@ -51,16 +53,17 @@ class GroupTagCloud(ProcessInterface):
 
     def isRun(self, msg, type):
         if type != TEXT or 'Content' not in msg:
-            return { 'shallRun': False }
+            return {'shallRun': False}
         if msg['Content'] == '/tagcloud':
-            return { 'shallRun': True, 'userName': None, 'groupName': msg['User']['NickName'] }
+            return {'shallRun': True, 'userName': None, 'groupName': msg['User']['NickName']}
         if msg['Content'] == '/mytag':
-            return { 'shallRun': True, 'userName': msg['ActualNickName'], 'groupName': msg['User']['NickName'] }
-        return { 'shallRun': False }
+            return {'shallRun': True, 'userName': msg['ActualNickName'], 'groupName': msg['User']['NickName']}
+        return {'shallRun': False}
 
     def generateTmpFileName(self):
         return '{0}/{1}-{2}.png'.format(self.imgDir, int(time.time() * 1000), random.randint(0, 10000))
 
+
 if __name__ == '__main__':
     groupTagCloud = GroupTagCloud()
-    groupTagCloud.generateTagCloudForGroup('💦人美三观正之嘴炮无下限')
+    groupTagCloud.generateTagCloudForGroup('602_635')

@@ -3,3 +3,9 @@
 *.swo
 .Python
 .DS_Store
+.idea/
+*.png
+*.mp3
+TagCloud/
+activityInfo/
+key.md
