@@ -8,6 +8,7 @@ from PaiDuiHook import PaiDuiHook
 from HistoryRecorder import HistoryRecorder
 from GroupTagCloud import GroupTagCloud
 from ShenMeGui import ShenMeGui
+from Translate import Translate
 from GroupMessageForwarder import GroupMessageForwarder
 from ProcessInterface import ProcessInterface
 from ActivityInfo import ActivityInfo
@@ -25,6 +26,7 @@ plugins = [
     # GlobalTextHook({'李文耀': '刘佳欣', '正 王': '海潮'}),
     HistoryRecorder(),
     ShenMeGui(),
+    Translate(),
     GroupTagCloud('~/Library/Fonts/wqy-microhei.ttc'),
     ActivityInfo('/users/steven.xu/Library/Fonts/wqy-microhei.ttc'),
     # GroupMessageForwarder(['Group1', 'Group2'], ['602_635', 'test1'])
